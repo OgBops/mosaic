@@ -17,4 +17,13 @@ target_include_directories(obs-mach-protocol INTERFACE "${CMAKE_CURRENT_SOURCE_D
 
 add_subdirectory(src/obs-plugin)
 add_subdirectory(src/dal-plugin)
-add_subdirectory(src/camera-extension)
+
+# OBS Studio Plus: the camera-extension target is Swift-only and CMake's Swift
+# support is tied to the Xcode generator. Skip it on Ninja (CLT-only) builds —
+# the rest of the virtual camera (DAL plugin + obs-plugin) still works for
+# legacy CMIO consumers; only the modern Camera Extension flavor is gated.
+if(XCODE)
+  add_subdirectory(src/camera-extension)
+else()
+  message(STATUS "OBS Studio Plus: skipping mac-camera-extension (requires Xcode generator).")
+endif()

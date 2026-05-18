@@ -31,6 +31,17 @@ function(set_target_properties_obs target)
   while(_STPO_PROPERTIES)
     list(POP_FRONT _STPO_PROPERTIES key value)
     set_property(TARGET ${target} PROPERTY ${key} "${value}")
+
+    # OBS Studio Plus: when building with a non-Xcode generator, translate the
+    # ARC opt-in attribute into actual compiler flags. Xcode would have applied
+    # this via the build setting; Ninja / Makefiles ignore it.
+    if(OBS_PLUS_NON_XCODE_BUILD AND key STREQUAL "XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC" AND value STREQUAL "YES")
+      target_compile_options(
+        ${target}
+        PRIVATE "$<$<COMPILE_LANGUAGE:OBJC>:-fobjc-arc>"
+                "$<$<COMPILE_LANGUAGE:OBJCXX>:-fobjc-arc>"
+      )
+    endif()
   endwhile()
 
   get_target_property(target_type ${target} TYPE)

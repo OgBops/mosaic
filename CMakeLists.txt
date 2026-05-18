@@ -26,7 +26,14 @@ if(OS_WINDOWS)
 endif()
 add_subdirectory(libobs-opengl)
 if(OS_MACOS)
-  add_subdirectory(libobs-metal)
+  # OBS Studio Plus: libobs-metal is Swift-only and CMake's Swift support is
+  # tied to the Xcode generator. CLT-only Ninja builds fall back to the
+  # OpenGL renderer (still fully functional, just not the modern Metal path).
+  if(XCODE)
+    add_subdirectory(libobs-metal)
+  else()
+    message(STATUS "OBS Studio Plus: skipping libobs-metal (Swift requires Xcode generator); using OpenGL renderer.")
+  endif()
 endif()
 add_subdirectory(plugins)
 

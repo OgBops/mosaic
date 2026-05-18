@@ -47,6 +47,21 @@ target_sources(
 
 target_link_libraries(mac-avcapture PRIVATE OBS::libobs)
 
+# OBS Studio Plus: when not on the Xcode generator, mac-avcapture still needs
+# to link the Apple frameworks it consumes. Xcode autolinks via
+# CLANG_MODULES_AUTOLINK; explicit linkage replaces that.
+if(OBS_PLUS_NON_XCODE_BUILD)
+  target_link_libraries(
+    mac-avcapture
+    PRIVATE "$<LINK_LIBRARY:FRAMEWORK,Foundation.framework>"
+            "$<LINK_LIBRARY:FRAMEWORK,AVFoundation.framework>"
+            "$<LINK_LIBRARY:FRAMEWORK,CoreMedia.framework>"
+            "$<LINK_LIBRARY:FRAMEWORK,CoreMediaIO.framework>"
+            "$<LINK_LIBRARY:FRAMEWORK,CoreVideo.framework>"
+            "$<LINK_LIBRARY:FRAMEWORK,IOSurface.framework>"
+  )
+endif()
+
 set_target_properties_obs(
   mac-avcapture
   PROPERTIES FOLDER plugins
