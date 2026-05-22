@@ -55,6 +55,13 @@ broadcasting engine and is not a derived work.
 - **Trademark separation.** Mosaic uses its own name, icon, bundle ID,
   and branding. We do not redistribute upstream-branded binaries from
   this repository.
+- **Upstream PRs are author-by-hand.** When the "file upstream first"
+  escape hatch triggers a PR to `obsproject/obs-studio`, the code,
+  commit message, PR description, and issue text are written by a
+  human. Upstream's AI/ML policy disallows AI-authored content; we
+  respect it. AI assistants in our workflow can read code and suggest
+  approaches but cannot generate text that crosses into the upstream
+  repository. See `CONTRIBUTING.md` for details.
 
 ## Phases
 

@@ -101,6 +101,51 @@ Specifically:
   `engine/`-only code, or from a `dev` HEAD where the build has been
   explicitly re-branded.
 
+## Commit conventions in this fork
+
+Inside this fork we follow the upstream OBS commit conventions (see the
+"OBS Studio Contribution Guidelines" section below) so any commit we
+later cherry-pick upstream is already compliant. The relevant rules:
+
+- **50/72.** Commit title ≤ 50 characters. Body lines ≤ 72 characters.
+- **Module prefix.** Use the OBS-style module prefix:
+  - `libobs:`, `obs-ffmpeg:`, `obs-x264:`, etc. for upstream code we
+    are not modifying (we wouldn't normally use these in this fork).
+  - `plugins:` for changes spanning multiple plugins.
+  - `cmake:` for CMake build system changes.
+  - `CI:` (capitalized) for continuous integration changes.
+  - `engine:` (Mosaic-specific) for new code under `engine/`.
+  - `docs:` (Mosaic-specific) for prose-only changes that touch no
+    code.
+- **American English** for commit messages, identifiers, comments, and
+  filenames.
+- **Why, not just what.** The body explains *why* the change was made
+  and *why* in this specific way. Treat it like the description of a
+  PR to upstream OBS, because cherry-picked commits become exactly that.
+- **120-character column limit** for source code lines.
+
+### AI/ML policy when filing upstream
+
+Upstream OBS Studio does not accept AI-authored content
+(see "AI/Machine Learning Policy" below). When the no-core-changes
+escape hatch in this fork triggers a PR to `obsproject/obs-studio`,
+**you author the code, commit message, PR description, and issue text
+yourself, by hand**. AI assistants in this workflow can:
+
+- Read upstream code and explain it
+- Point at relevant files, headers, or prior art
+- Suggest approaches at a high level
+
+They cannot:
+
+- Author patch text, commit messages, PR bodies, or issue comments that
+  will be submitted upstream
+- Generate the actual diff that ships in an upstream PR
+
+This rule applies only to content that crosses the boundary into
+`obsproject/obs-studio`. Internal Mosaic work in this repository is not
+subject to it.
+
 ## Branching
 
 | Branch | Purpose |
